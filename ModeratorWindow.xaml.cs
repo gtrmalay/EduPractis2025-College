@@ -99,6 +99,13 @@ namespace EventsWPF_Practic
                 MessageBox.Show($"Ошибка при сохранении: {ex.Message}", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Error);
             }
         }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
+        }
     }
 
     public class ModeratedActivity

@@ -124,7 +124,7 @@ namespace Session1
             Close();
         }
 
-        private void CancelButton_Click(object sender, RoutedEventArgs e)
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
             DialogResult = false; // Возвращаем неуспешный результат
             Close();
@@ -135,5 +135,7 @@ namespace Session1
             if (string.IsNullOrWhiteSpace(email)) return true; // Пустой email допустим
             return Regex.IsMatch(email, @"^[^@\s]+@[^@\s]+\.[^@\s]+$");
         }
+
+       
     }
 }

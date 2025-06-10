@@ -39,5 +39,12 @@ namespace EventsWPF_Practic
                               }).ToList();
             ActivitiesListView.ItemsSource = activities;
         }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
+        }
     }
 }

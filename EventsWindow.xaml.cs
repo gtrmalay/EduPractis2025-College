@@ -62,5 +62,7 @@ namespace EventsWPF_Practic
                 MessageBox.Show("Выберите мероприятие для удаления.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+       
     }
 }

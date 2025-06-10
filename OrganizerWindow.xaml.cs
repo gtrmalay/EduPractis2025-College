@@ -41,7 +41,7 @@ namespace EventsWPF_Practic
         private void ShowGreeting()
         {
             string timeOfDay;
-            var now = DateTime.Now.TimeOfDay; // 01:17 CEST
+            var now = DateTime.Now.TimeOfDay;
 
             if (now >= TimeSpan.FromHours(6) && now < TimeSpan.FromHours(12))
                 timeOfDay = "Доброе утро";
@@ -50,7 +50,7 @@ namespace EventsWPF_Practic
             else if (now >= TimeSpan.FromHours(18) && now < TimeSpan.FromHours(24))
                 timeOfDay = "Добрый вечер";
             else
-                timeOfDay = "Доброй ночи"; // Для 01:17 будет "Доброй ночи"
+                timeOfDay = "Доброй ночи";
 
             string prefix = GetUserGenderPrefix(_user.UserID);
             string fullName = $"{prefix} {_user.FirstName}".Trim();
@@ -125,17 +125,12 @@ namespace EventsWPF_Practic
             activitiesWindow.ShowDialog();
         }
 
-        private void RegisterJuryButton_Click(object sender, RoutedEventArgs e)
+   
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
         {
-            // Проверка роли организатора
-            if (!_user.Roles.Any(r => r.RoleName == "организатор"))
-            {
-                MessageBox.Show("У вас нет прав для выполнения этой операции.", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Warning);
-                return;
-            }
-
-            var registerJuryWindow = new RegisterJuryWindow();
-            registerJuryWindow.ShowDialog();
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
         }
     }
 }

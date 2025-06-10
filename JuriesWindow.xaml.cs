@@ -35,20 +35,14 @@ namespace EventsWPF_Practic
 
         private void AddJuryButton_Click(object sender, RoutedEventArgs e)
         {
-            var newUser = new Users { UserID = 0 };
-            var editWindow = new UserEditWindow(newUser, _db, _user);
-            if (editWindow.ShowDialog() == true)
+            if (!_user.Roles.Any(r => r.RoleName == "организатор"))
             {
-                _db.Users.Add(newUser);
-                _db.SaveChanges();
-                var eventId = _db.Events.FirstOrDefault()?.EventID;
-                if (eventId.HasValue)
-                {
-                    _db.EventsJury.Add(new EventsJury { EventID = eventId.Value, JuryUserID = newUser.UserID });
-                    _db.SaveChanges();
-                }
-                LoadJury();
+                MessageBox.Show("У вас нет прав для выполнения этой операции.", "Ошибка доступа", MessageBoxButton.OK, MessageBoxImage.Warning);
+                return;
             }
+
+            var registerJuryWindow = new RegisterJuryWindow();
+            registerJuryWindow.ShowDialog();
         }
 
         private void DeleteJuryButton_Click(object sender, RoutedEventArgs e)
@@ -67,6 +61,13 @@ namespace EventsWPF_Practic
             {
                 MessageBox.Show("Выберите члена жюри для удаления.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
+        }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            var loginWindow = new LoginWindow();
+            loginWindow.Show();
+            this.Close();
         }
     }
 }

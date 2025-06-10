@@ -1,7 +1,8 @@
 ﻿<Window x:Class="EventsWPF_Practic.ModeratorWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="Окно Модератора" Height="450" Width="550">
+        Title="Окно Модератора" Height="450" Width="550"
+        Background="Black">
     <Grid Margin="20">
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto"/>
@@ -10,14 +11,39 @@
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
 
-        <TextBlock x:Name="GreetingTextBlock" FontSize="16" Margin="0,0,0,10"/>
+        <Border Grid.Row="0" Background="White" CornerRadius="8" Padding="10" Margin="0,0,0,15" BorderBrush="#E0E0E0" BorderThickness="1">
+            <TextBlock x:Name="GreetingTextBlock" FontSize="18" FontWeight="Medium" Foreground="#333333"/>
+        </Border>
 
-        <!-- Выбор мероприятия -->
-        <ComboBox x:Name="EventsComboBox" Grid.Row="1" Margin="0,0,0,10" SelectionChanged="EventsComboBox_SelectionChanged"
-                  DisplayMemberPath="EventName" SelectedValuePath="EventID" />
+        <Border Grid.Row="1" Background="White" CornerRadius="8" Padding="10" Margin="0,0,0,15" BorderBrush="#E0E0E0" BorderThickness="1">
+            <ComboBox x:Name="EventsComboBox" Margin="0,0,0,0" SelectionChanged="EventsComboBox_SelectionChanged"
+                      DisplayMemberPath="EventName" SelectedValuePath="EventID">
+                <ComboBox.Resources>
+                    <Style TargetType="ComboBox">
+                        <Setter Property="Background" Value="White"/>
+                        <Setter Property="BorderBrush" Value="#E0E0E0"/>
+                        <Setter Property="BorderThickness" Value="1"/>
+                        <Setter Property="Padding" Value="5"/>
+                    </Style>
+                </ComboBox.Resources>
+            </ComboBox>
+        </Border>
 
-        <!-- Список активностей -->
-        <ListView x:Name="ActivitiesListView" Grid.Row="2" Margin="0,0,0,10">
+        <ListView x:Name="ActivitiesListView" Grid.Row="2" Margin="0,0,0,15" Background="White" BorderBrush="#E0E0E0" BorderThickness="1">
+            <ListView.Resources>
+                <Style TargetType="ListViewItem">
+                    <Setter Property="HorizontalContentAlignment" Value="Stretch"/>
+                    <Setter Property="Padding" Value="10"/>
+                    <Style.Triggers>
+                        <Trigger Property="IsMouseOver" Value="True">
+                            <Setter Property="Background" Value="#F0F0F0"/>
+                        </Trigger>
+                        <Trigger Property="IsSelected" Value="True">
+                            <Setter Property="Background" Value="#E3F2FD"/>
+                        </Trigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.Resources>
             <ListView.View>
                 <GridView>
                     <GridViewColumn Header="Мероприятие" Width="150" DisplayMemberBinding="{Binding EventName}"/>
@@ -26,7 +52,49 @@
             </ListView.View>
         </ListView>
 
-        <Button x:Name="RegisterActivityButton" Content="Выбрать активность" Grid.Row="3" Width="150" 
-                HorizontalAlignment="Left" Click="RegisterActivityButton_Click"/>
+        <StackPanel Grid.Row="3" Orientation="Horizontal" HorizontalAlignment="Right">
+            <Button x:Name="RegisterActivityButton" Content="Выбрать активность" Width="150" Margin="0,0,10,0" 
+                    Background="Purple" Foreground="White" BorderThickness="0" Padding="10,5" Click="RegisterActivityButton_Click">
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#1976D2"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+            </Button>
+            <Button x:Name="LogoutButton" Content="Выйти" Width="100" 
+                    Background="White" Foreground="Black" BorderThickness="0" Padding="10,5" Click="LogoutButton_Click">
+                <Button.Resources>
+                    <Style TargetType="Button">
+                        <Setter Property="Template">
+                            <Setter.Value>
+                                <ControlTemplate TargetType="Button">
+                                    <Border Background="{TemplateBinding Background}" CornerRadius="4" Padding="{TemplateBinding Padding}">
+                                        <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                                    </Border>
+                                </ControlTemplate>
+                            </Setter.Value>
+                        </Setter>
+                        <Style.Triggers>
+                            <Trigger Property="IsMouseOver" Value="True">
+                                <Setter Property="Background" Value="#D32F2F"/>
+                            </Trigger>
+                        </Style.Triggers>
+                    </Style>
+                </Button.Resources>
+            </Button>
+        </StackPanel>
     </Grid>
 </Window>

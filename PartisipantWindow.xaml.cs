@@ -100,5 +100,15 @@ namespace EventsWPF_Practic
                 LoadGroupActivities();
             }
         }
+
+        private void LogoutButton_Click(object sender, RoutedEventArgs e)
+        {
+            // Create and show the login window
+            var loginWindow = new LoginWindow(); // Assuming LoginWindow exists in the project
+            loginWindow.Show();
+
+            // Close the current participant window
+            this.Close();
+        }
     }
 }

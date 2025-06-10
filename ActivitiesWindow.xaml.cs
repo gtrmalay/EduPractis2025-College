@@ -66,5 +66,7 @@ namespace EventsWPF_Practic
                 MessageBox.Show("Выберите активность для удаления.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
+
+        
     }
 }
