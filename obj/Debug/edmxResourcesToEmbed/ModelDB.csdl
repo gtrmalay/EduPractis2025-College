@@ -1,0 +1,395 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Schema Namespace="EventsDB_PracticModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+  <EntityType Name="Activities">
+    <Key>
+      <PropertyRef Name="ActivityID" />
+    </Key>
+    <Property Name="ActivityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="ActivityName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="ActivitiesEvents" Relationship="Self.FK__Activitie__Activ__74AE54BC" FromRole="Activities" ToRole="ActivitiesEvents" />
+    <NavigationProperty Name="EventsJury" Relationship="Self.FK__EventsJur__Activ__7A672E12" FromRole="Activities" ToRole="EventsJury" />
+  </EntityType>
+  <EntityType Name="ActivitiesEvents">
+    <Key>
+      <PropertyRef Name="ActivityID" />
+      <PropertyRef Name="EventID" />
+    </Key>
+    <Property Name="ActivityID" Type="Int32" Nullable="false" />
+    <Property Name="EventID" Type="Int32" Nullable="false" />
+    <Property Name="DayNumber" Type="Int32" Nullable="false" />
+    <Property Name="StartTime" Type="Time" Nullable="false" Precision="7" />
+    <Property Name="ModeratorUserID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Activities" Relationship="Self.FK__Activitie__Activ__74AE54BC" FromRole="ActivitiesEvents" ToRole="Activities" />
+    <NavigationProperty Name="Events" Relationship="Self.FK__Activitie__Event__75A278F5" FromRole="ActivitiesEvents" ToRole="Events" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Activitie__Moder__76969D2E" FromRole="ActivitiesEvents" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Cities">
+    <Key>
+      <PropertyRef Name="CityID" />
+    </Key>
+    <Property Name="CityID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="CityName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="WikipediaUrl" Type="String" MaxLength="Max" FixedLength="false" Unicode="false" />
+    <NavigationProperty Name="Events" Relationship="Self.CitiesEvents" FromRole="Cities" ToRole="Events" />
+  </EntityType>
+  <EntityType Name="Countries">
+    <Key>
+      <PropertyRef Name="CountryID" />
+    </Key>
+    <Property Name="CountryID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="IsoCode" Type="String" MaxLength="2" FixedLength="false" Unicode="true" />
+    <Property Name="CountryCode" Type="Int32" />
+    <Property Name="NameRu" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="NameEn" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Users__CountryCo__52593CB8" FromRole="Countries" ToRole="Users" />
+    <NavigationProperty Name="Users1" Relationship="Self.UsersCountries" FromRole="Countries" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Directions">
+    <Key>
+      <PropertyRef Name="DirectionID" />
+    </Key>
+    <Property Name="DirectionID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="DirectionName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="EventTypeDirection" Relationship="Self.FK__EventType__Direc__6FE99F9F" FromRole="Directions" ToRole="EventTypeDirection" />
+    <NavigationProperty Name="Users" Relationship="Self.UserDirections" FromRole="Directions" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Events">
+    <Key>
+      <PropertyRef Name="EventID" />
+    </Key>
+    <Property Name="EventID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="EventName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="EventDate" Type="DateTime" Precision="0" />
+    <Property Name="EventDaysCount" Type="Int32" />
+    <Property Name="UserID" Type="Int32" />
+    <NavigationProperty Name="ActivitiesEvents" Relationship="Self.FK__Activitie__Event__75A278F5" FromRole="Events" ToRole="ActivitiesEvents" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__Events__UserID__6383C8BA" FromRole="Events" ToRole="Users" />
+    <NavigationProperty Name="EventsJury" Relationship="Self.FK__EventsJur__Event__797309D9" FromRole="Events" ToRole="EventsJury" />
+    <NavigationProperty Name="EventTypeDirection" Relationship="Self.FK__EventType__Event__6E01572D" FromRole="Events" ToRole="EventTypeDirection" />
+    <NavigationProperty Name="Cities" Relationship="Self.CitiesEvents" FromRole="Events" ToRole="Cities" />
+    <NavigationProperty Name="Users1" Relationship="Self.UserEvents" FromRole="Events" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="EventsJury">
+    <Key>
+      <PropertyRef Name="EventID" />
+      <PropertyRef Name="ActivityID" />
+      <PropertyRef Name="JuryUserID" />
+    </Key>
+    <Property Name="EventID" Type="Int32" Nullable="false" />
+    <Property Name="ActivityID" Type="Int32" Nullable="false" />
+    <Property Name="JuryUserID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Activities" Relationship="Self.FK__EventsJur__Activ__7A672E12" FromRole="EventsJury" ToRole="Activities" />
+    <NavigationProperty Name="Events" Relationship="Self.FK__EventsJur__Event__797309D9" FromRole="EventsJury" ToRole="Events" />
+    <NavigationProperty Name="Users" Relationship="Self.FK__EventsJur__JuryU__7B5B524B" FromRole="EventsJury" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="EventTypeDirection">
+    <Key>
+      <PropertyRef Name="EventID" />
+      <PropertyRef Name="EventTypeID" />
+      <PropertyRef Name="DirectionID" />
+    </Key>
+    <Property Name="EventID" Type="Int32" Nullable="false" />
+    <Property Name="EventTypeID" Type="Int32" Nullable="false" />
+    <Property Name="DirectionID" Type="Int32" Nullable="false" />
+    <NavigationProperty Name="Directions" Relationship="Self.FK__EventType__Direc__6FE99F9F" FromRole="EventTypeDirection" ToRole="Directions" />
+    <NavigationProperty Name="Events" Relationship="Self.FK__EventType__Event__6E01572D" FromRole="EventTypeDirection" ToRole="Events" />
+    <NavigationProperty Name="EventTypes" Relationship="Self.FK__EventType__Event__6EF57B66" FromRole="EventTypeDirection" ToRole="EventTypes" />
+  </EntityType>
+  <EntityType Name="EventTypes">
+    <Key>
+      <PropertyRef Name="EventTypeID" />
+    </Key>
+    <Property Name="EventTypeID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="TypeName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="EventTypeDirection" Relationship="Self.FK__EventType__Event__6EF57B66" FromRole="EventTypes" ToRole="EventTypeDirection" />
+  </EntityType>
+  <EntityType Name="Genders">
+    <Key>
+      <PropertyRef Name="GenderID" />
+    </Key>
+    <Property Name="GenderID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="GenderName" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.UsersGenders" FromRole="Genders" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="Roles">
+    <Key>
+      <PropertyRef Name="RoleID" />
+    </Key>
+    <Property Name="RoleID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="RoleName" Type="String" MaxLength="50" FixedLength="false" Unicode="true" Nullable="false" />
+    <NavigationProperty Name="Users" Relationship="Self.UsersRoles" FromRole="Roles" ToRole="Users" />
+  </EntityType>
+  <EntityType Name="sysdiagrams">
+    <Key>
+      <PropertyRef Name="diagram_id" />
+    </Key>
+    <Property Name="name" Type="String" MaxLength="128" FixedLength="false" Unicode="true" Nullable="false" />
+    <Property Name="principal_id" Type="Int32" Nullable="false" />
+    <Property Name="diagram_id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="version" Type="Int32" />
+    <Property Name="definition" Type="Binary" MaxLength="Max" FixedLength="false" />
+  </EntityType>
+  <EntityType Name="Users">
+    <Key>
+      <PropertyRef Name="UserID" />
+    </Key>
+    <Property Name="UserID" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+    <Property Name="Surname" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="FirstName" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="Patronymic" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="EmailAddress" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <Property Name="BirthDate" Type="DateTime" Precision="0" />
+    <Property Name="CountryCode" Type="Int32" />
+    <Property Name="PhoneNumber" Type="String" MaxLength="20" FixedLength="false" Unicode="true" />
+    <Property Name="UserPass" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+    <Property Name="PhotoPath" Type="String" MaxLength="100" FixedLength="false" Unicode="true" />
+    <NavigationProperty Name="ActivitiesEvents" Relationship="Self.FK__Activitie__Moder__76969D2E" FromRole="Users" ToRole="ActivitiesEvents" />
+    <NavigationProperty Name="Countries" Relationship="Self.FK__Users__CountryCo__52593CB8" FromRole="Users" ToRole="Countries" />
+    <NavigationProperty Name="Events" Relationship="Self.FK__Events__UserID__6383C8BA" FromRole="Users" ToRole="Events" />
+    <NavigationProperty Name="EventsJury" Relationship="Self.FK__EventsJur__JuryU__7B5B524B" FromRole="Users" ToRole="EventsJury" />
+    <NavigationProperty Name="Directions" Relationship="Self.UserDirections" FromRole="Users" ToRole="Directions" />
+    <NavigationProperty Name="Events1" Relationship="Self.UserEvents" FromRole="Users" ToRole="Events" />
+    <NavigationProperty Name="Countries1" Relationship="Self.UsersCountries" FromRole="Users" ToRole="Countries" />
+    <NavigationProperty Name="Roles" Relationship="Self.UsersRoles" FromRole="Users" ToRole="Roles" />
+    <NavigationProperty Name="Genders" Relationship="Self.UsersGenders" FromRole="Users" ToRole="Genders" />
+  </EntityType>
+  <Association Name="FK__Activitie__Activ__74AE54BC">
+    <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
+    <End Role="ActivitiesEvents" Type="Self.ActivitiesEvents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activities">
+        <PropertyRef Name="ActivityID" />
+      </Principal>
+      <Dependent Role="ActivitiesEvents">
+        <PropertyRef Name="ActivityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EventsJur__Activ__7A672E12">
+    <End Role="Activities" Type="Self.Activities" Multiplicity="1" />
+    <End Role="EventsJury" Type="Self.EventsJury" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Activities">
+        <PropertyRef Name="ActivityID" />
+      </Principal>
+      <Dependent Role="EventsJury">
+        <PropertyRef Name="ActivityID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Activitie__Event__75A278F5">
+    <End Role="Events" Type="Self.Events" Multiplicity="1" />
+    <End Role="ActivitiesEvents" Type="Self.ActivitiesEvents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Events">
+        <PropertyRef Name="EventID" />
+      </Principal>
+      <Dependent Role="ActivitiesEvents">
+        <PropertyRef Name="EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Activitie__Moder__76969D2E">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="ActivitiesEvents" Type="Self.ActivitiesEvents" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="ActivitiesEvents">
+        <PropertyRef Name="ModeratorUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Users__CountryCo__52593CB8">
+    <End Role="Countries" Type="Self.Countries" Multiplicity="0..1" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Countries">
+        <PropertyRef Name="CountryID" />
+      </Principal>
+      <Dependent Role="Users">
+        <PropertyRef Name="CountryCode" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EventType__Direc__6FE99F9F">
+    <End Role="Directions" Type="Self.Directions" Multiplicity="1" />
+    <End Role="EventTypeDirection" Type="Self.EventTypeDirection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Directions">
+        <PropertyRef Name="DirectionID" />
+      </Principal>
+      <Dependent Role="EventTypeDirection">
+        <PropertyRef Name="DirectionID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__Events__UserID__6383C8BA">
+    <End Role="Users" Type="Self.Users" Multiplicity="0..1" />
+    <End Role="Events" Type="Self.Events" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="Events">
+        <PropertyRef Name="UserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EventsJur__Event__797309D9">
+    <End Role="Events" Type="Self.Events" Multiplicity="1" />
+    <End Role="EventsJury" Type="Self.EventsJury" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Events">
+        <PropertyRef Name="EventID" />
+      </Principal>
+      <Dependent Role="EventsJury">
+        <PropertyRef Name="EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EventType__Event__6E01572D">
+    <End Role="Events" Type="Self.Events" Multiplicity="1" />
+    <End Role="EventTypeDirection" Type="Self.EventTypeDirection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Events">
+        <PropertyRef Name="EventID" />
+      </Principal>
+      <Dependent Role="EventTypeDirection">
+        <PropertyRef Name="EventID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EventsJur__JuryU__7B5B524B">
+    <End Role="Users" Type="Self.Users" Multiplicity="1" />
+    <End Role="EventsJury" Type="Self.EventsJury" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="Users">
+        <PropertyRef Name="UserID" />
+      </Principal>
+      <Dependent Role="EventsJury">
+        <PropertyRef Name="JuryUserID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="FK__EventType__Event__6EF57B66">
+    <End Role="EventTypes" Type="Self.EventTypes" Multiplicity="1" />
+    <End Role="EventTypeDirection" Type="Self.EventTypeDirection" Multiplicity="*" />
+    <ReferentialConstraint>
+      <Principal Role="EventTypes">
+        <PropertyRef Name="EventTypeID" />
+      </Principal>
+      <Dependent Role="EventTypeDirection">
+        <PropertyRef Name="EventTypeID" />
+      </Dependent>
+    </ReferentialConstraint>
+  </Association>
+  <Association Name="CitiesEvents">
+    <End Role="Cities" Type="Self.Cities" Multiplicity="*" />
+    <End Role="Events" Type="Self.Events" Multiplicity="*" />
+  </Association>
+  <Association Name="UserDirections">
+    <End Role="Directions" Type="Self.Directions" Multiplicity="*" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+  </Association>
+  <Association Name="UserEvents">
+    <End Role="Events" Type="Self.Events" Multiplicity="*" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+  </Association>
+  <Association Name="UsersCountries">
+    <End Role="Countries" Type="Self.Countries" Multiplicity="*" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+  </Association>
+  <Association Name="UsersRoles">
+    <End Role="Roles" Type="Self.Roles" Multiplicity="*" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+  </Association>
+  <Association Name="UsersGenders">
+    <End Role="Genders" Type="Self.Genders" Multiplicity="*" />
+    <End Role="Users" Type="Self.Users" Multiplicity="*" />
+  </Association>
+  <EntityContainer Name="EventsDB_PracticEntities" annotation:LazyLoadingEnabled="true">
+    <EntitySet Name="Activities" EntityType="Self.Activities" />
+    <EntitySet Name="ActivitiesEvents" EntityType="Self.ActivitiesEvents" />
+    <EntitySet Name="Cities" EntityType="Self.Cities" />
+    <EntitySet Name="Countries" EntityType="Self.Countries" />
+    <EntitySet Name="Directions" EntityType="Self.Directions" />
+    <EntitySet Name="Events" EntityType="Self.Events" />
+    <EntitySet Name="EventsJury" EntityType="Self.EventsJury" />
+    <EntitySet Name="EventTypeDirection" EntityType="Self.EventTypeDirection" />
+    <EntitySet Name="EventTypes" EntityType="Self.EventTypes" />
+    <EntitySet Name="Genders" EntityType="Self.Genders" />
+    <EntitySet Name="Roles" EntityType="Self.Roles" />
+    <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" />
+    <EntitySet Name="Users" EntityType="Self.Users" />
+    <AssociationSet Name="FK__Activitie__Activ__74AE54BC" Association="Self.FK__Activitie__Activ__74AE54BC">
+      <End Role="Activities" EntitySet="Activities" />
+      <End Role="ActivitiesEvents" EntitySet="ActivitiesEvents" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EventsJur__Activ__7A672E12" Association="Self.FK__EventsJur__Activ__7A672E12">
+      <End Role="Activities" EntitySet="Activities" />
+      <End Role="EventsJury" EntitySet="EventsJury" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Activitie__Event__75A278F5" Association="Self.FK__Activitie__Event__75A278F5">
+      <End Role="Events" EntitySet="Events" />
+      <End Role="ActivitiesEvents" EntitySet="ActivitiesEvents" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Activitie__Moder__76969D2E" Association="Self.FK__Activitie__Moder__76969D2E">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="ActivitiesEvents" EntitySet="ActivitiesEvents" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Users__CountryCo__52593CB8" Association="Self.FK__Users__CountryCo__52593CB8">
+      <End Role="Countries" EntitySet="Countries" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EventType__Direc__6FE99F9F" Association="Self.FK__EventType__Direc__6FE99F9F">
+      <End Role="Directions" EntitySet="Directions" />
+      <End Role="EventTypeDirection" EntitySet="EventTypeDirection" />
+    </AssociationSet>
+    <AssociationSet Name="FK__Events__UserID__6383C8BA" Association="Self.FK__Events__UserID__6383C8BA">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="Events" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EventsJur__Event__797309D9" Association="Self.FK__EventsJur__Event__797309D9">
+      <End Role="Events" EntitySet="Events" />
+      <End Role="EventsJury" EntitySet="EventsJury" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EventType__Event__6E01572D" Association="Self.FK__EventType__Event__6E01572D">
+      <End Role="Events" EntitySet="Events" />
+      <End Role="EventTypeDirection" EntitySet="EventTypeDirection" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EventsJur__JuryU__7B5B524B" Association="Self.FK__EventsJur__JuryU__7B5B524B">
+      <End Role="Users" EntitySet="Users" />
+      <End Role="EventsJury" EntitySet="EventsJury" />
+    </AssociationSet>
+    <AssociationSet Name="FK__EventType__Event__6EF57B66" Association="Self.FK__EventType__Event__6EF57B66">
+      <End Role="EventTypes" EntitySet="EventTypes" />
+      <End Role="EventTypeDirection" EntitySet="EventTypeDirection" />
+    </AssociationSet>
+    <AssociationSet Name="CitiesEvents" Association="Self.CitiesEvents">
+      <End Role="Cities" EntitySet="Cities" />
+      <End Role="Events" EntitySet="Events" />
+    </AssociationSet>
+    <AssociationSet Name="UserDirections" Association="Self.UserDirections">
+      <End Role="Directions" EntitySet="Directions" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="UserEvents" Association="Self.UserEvents">
+      <End Role="Events" EntitySet="Events" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="UsersCountries" Association="Self.UsersCountries">
+      <End Role="Countries" EntitySet="Countries" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="UsersRoles" Association="Self.UsersRoles">
+      <End Role="Roles" EntitySet="Roles" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+    <AssociationSet Name="UsersGenders" Association="Self.UsersGenders">
+      <End Role="Genders" EntitySet="Genders" />
+      <End Role="Users" EntitySet="Users" />
+    </AssociationSet>
+  </EntityContainer>
+</Schema>

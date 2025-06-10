@@ -1,0 +1,24 @@
+﻿<Window x:Class="EventsWPF_Practic.JuryWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Окно Жюри" Height="400" Width="500">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="GreetingTextBlock" FontSize="16" Margin="0,0,0,10"/>
+
+        <ListView x:Name="ActivitiesListView" Grid.Row="1" Margin="0,0,0,10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Мероприятие" Width="150" DisplayMemberBinding="{Binding EventName}"/>
+                    <GridViewColumn Header="Дата" Width="100" DisplayMemberBinding="{Binding EventDate, StringFormat={}{0:dd.MM.yyyy}}"/>
+                    <GridViewColumn Header="Участников" Width="80" DisplayMemberBinding="{Binding ParticipantsCount}"/>
+                    <GridViewColumn Header="Средний балл" Width="80" DisplayMemberBinding="{Binding AverageScore, StringFormat={}{0:F2}}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+    </Grid>
+</Window>

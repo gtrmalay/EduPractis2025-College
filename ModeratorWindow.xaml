@@ -1,0 +1,32 @@
+﻿<Window x:Class="EventsWPF_Practic.ModeratorWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Окно Модератора" Height="450" Width="550">
+    <Grid Margin="20">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="*"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <TextBlock x:Name="GreetingTextBlock" FontSize="16" Margin="0,0,0,10"/>
+
+        <!-- Выбор мероприятия -->
+        <ComboBox x:Name="EventsComboBox" Grid.Row="1" Margin="0,0,0,10" SelectionChanged="EventsComboBox_SelectionChanged"
+                  DisplayMemberPath="EventName" SelectedValuePath="EventID" />
+
+        <!-- Список активностей -->
+        <ListView x:Name="ActivitiesListView" Grid.Row="2" Margin="0,0,0,10">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Мероприятие" Width="150" DisplayMemberBinding="{Binding EventName}"/>
+                    <GridViewColumn Header="День" Width="50" DisplayMemberBinding="{Binding DayNumber}"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
+        <Button x:Name="RegisterActivityButton" Content="Выбрать активность" Grid.Row="3" Width="150" 
+                HorizontalAlignment="Left" Click="RegisterActivityButton_Click"/>
+    </Grid>
+</Window>
